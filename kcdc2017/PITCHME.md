@@ -1,10 +1,6 @@
 # KCDC 2017
 
----?image=assets/black-yak.png
-
----?image=assets/md/assets/black-yak.png
-
----
+---?image=kcdc2017/assets/black-yak.png
 
 ### Docker hands-on Workshop
 
