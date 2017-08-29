@@ -4,43 +4,53 @@
 
 ### Docker hands-on Workshop
 
-put on by rob rich
-
-- Volume or copy. Ideally volume, so everything is setup and consistent for developers.
-- cross origin requests: use separate domain (discoverable) or proxy
+- Volume or copy: ideally volume, so everything is setup and consistent for developers.
+- Cross origin requests: use separate domain (discoverable) or proxy through web server
 - How do you update containers: you don't you rebuild them
-- How do you access logs: you don't, you store them elsewhere which is durable
-- How to run containers: https://robrich.org/slides/docker-in-azure/#/41
-- Why so many ways: try to meet the person where they are at, instead of making them adapt their current method
-- Cloud Floundary: discussion with person from Garmin.
+- How do you access logs: you don't, you store them somewhere durable
+
++++
+
+- Cloud Floundary: Continuous deployment outside of Docker (Garmin)
+- Why so many ways: try to meet the person where they are at
+    - [A comparison](https://robrich.org/slides/docker-in-azure/#/41)
 
 ---
 
 ### A practical approach to using graph databases and analytics
 
-- nodes & relationships form a path
-- figure out what goes with what
-    - like amazon, customers also bought: 35% of sales
+- Nodes & relationships form a path
+- Figure out what goes with what
+    - Example: Amazon's customers also bought (35% of sales)
 
 +++
 
-- Can break relational dbs when changes are made, net relationships are added
-- Graph db: add labels to code, change the code
 - Can change the model easily
+    - Add labels to code, change the code, done
+    - Relational DB: Can break when changes are made, like when new relationships are added
 - Reduced complexity and faster queries
+
+Note:
+Not very applicable to SoftDev, more comparable to the data warehouse
+
 
 ---
 
-### Deconstructing TypeScript
+### [Deconstructing TypeScript](https://gitpitch.com/schneidenbach/TypeScriptTypeSystem)
 
-https://gitpitch.com/schneidenbach/TypeScriptTypeSystem
+- Union types
+- Type guards
+- Intersection types
+- Type capture
+- Discriminated unions
+- <a target="_blank" href='http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(shape:%20Shape)%20{%0A%20%20%20%20switch%20(shape.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20shape.size%20*%20shape.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20shape.height%20*%20shape.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(shape);%0A%20%20%20%20}%0A}'>Never type</a>
 
-- Are using now with Angular
-- Union types, type guards, intersection types, type capture, discriminated unions, never type
+Note:
+Useful since we use Angular, which uses TypeScript
+TypeScript much more sophisticated than I realized
 
 +++
 
-[TypeScript playground](http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(shape:%20Shape)%20{%0A%20%20%20%20switch%20(shape.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20shape.size%20*%20shape.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20shape.height%20*%20shape.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(shape);%0A%20%20%20%20}%0A})
 
 
 ```typescript
@@ -80,13 +90,7 @@ function area(shape: Shape) {
 
 +++
 
-### Q's
-
-- What about other typed languages which compile to JavaScript or WebAssembly?
-
-+++
-
-###  Use a type guard to handle correct response
+<h3><a href='http://www.typescriptlang.org/play/#src=interface%20PersonPostRequest%20{%0A%20%20%20%20firstName:%20string;%0A%20%20%20%20lastName:%20string;%0A}%0A%0Ainterface%20PersonOkResponse%20{%0A%20%20%20%20id:%20number;%0A}%0A%0A//indexed%20type%20and%20keyof%0Ainterface%20BadRequestResponse<TRequest>%20{%0A%20%20%20%20message:%20string;%0A%20%20%20%20modelState:%20{%0A%20%20%20%20%20%20%20%20[K%20in%20keyof%20TRequest]:%20string[];%0A%20%20%20%20};%0A}%0A%0A//union%20type%0Atype%20PersonResponse%20=%20%0A%20%20%20%20PersonOkResponse%20|%20BadRequestResponse<PersonPostRequest>%0A%0A//type%20guard%0Afunction%20isErrorResponse(response:%20PersonResponse)%20%0A%20%20%20%20:%20response%20is%20BadRequestResponse<PersonPostRequest>%20{%0A%20%20%20%20return%20(response%20as%20BadRequestResponse<PersonPostRequest>).modelState%20!==%20undefined;%0A}%0A%0A//type%20guard%20compile%20time%20awesomeness!%0Afunction%20handleResponse(response:%20PersonResponse)%20{%0A%20%20%20%20if%20(isErrorResponse(response))%20{%0A%20%20%20%20%20%20%20%20console.log(response.modelState.firstName[0]);%20%20//or%20whatever...%0A%20%20%20%20}%20else%20{%0A%20%20%20%20%20%20%20%20console.log(response.id);%0A%20%20%20%20}%0A}%0A'>Use a type guard to handle correct response</a></h3>
 
 ```typescript
 //type guard
@@ -98,17 +102,27 @@ function isErrorResponse(response: PersonResponse)
 //type guard compile time awesomeness!
 function handleResponse(response: PersonResponse) {
     if (isErrorResponse(response)) {
-        console.log(response.modelState.firstName[0]);  //or whatever...
+        console.log(response.modelState.firstName[0]);  //or whatever…
     } else {
         console.log(response.id);
     }
 }
 ```
+
+Note:
+The type of response is known, that there is a modelState and has firstName
+
++++
+
+### Q's
+
+- What about other typed languages which compile to JavaScript or WebAssembly?
+
 ---
 
 ### Doing DevOps
 
-> Union of people, process, and products to enable continuous delivery of value to our end users
+> "Union of people, process, and products to enable continuous delivery of value to our end users"
 
 +++
 
@@ -140,13 +154,13 @@ Example:
 
 ### Q's
 
-- Do you need automated testing in place?
+- Is automated testing a prerequisite for quicker deployment cycles?
 
 ---
 
 ### 12 factor application development
 
-- Monoliths: long time to deploy
+- Monoliths take a long time to deploy
 - Not how to write the code but how to manage the code you run it in
     - Goal: isolate changes and deploy quickly
 - The observed patterns deploying rapidly to cloud
@@ -155,7 +169,7 @@ Example:
 
 ### C# without null or exceptions
 
-[From public gist](https://gist.github.com/reidev275/dd57c807a8db6ac2189a672c8b32a348)
+[Gist: reidev275/IMaybe.cs](https://gist.github.com/reidev275/dd57c807a8db6ac2189a672c8b32a348)
 
 ```csharp
 public interface IMaybe<T>
@@ -165,6 +179,10 @@ public interface IMaybe<T>
     IMaybe<T> Filter(Func<T, bool> predicate);
     IMaybe<T> Do(Action<T> some, Action none);
 }
+
+class Just<T> : IMaybe<T> {…}
+
+class Nothing<T> : IMaybe<T> {…}
 
 public static class IEnumerableExtensions
 {
@@ -183,8 +201,9 @@ new List<string>()
 () => Console.WriteLine("Cannot take the head of an empty list"));
 ```
 @[1-7]
-@[8-17]
-@[18-23]
+@[8-11]
+@[12-21]
+@[22-27]
 
 +++
 
@@ -232,11 +251,14 @@ new List<string>()
 ### Continuous deliver in Azure: beyond right click deploy
 
 - Visual Studio experience
-    - Locks the site
+    - Locks the site (can't redeploy)
     - Very limited in how the application can be deployed
 - Continuous deployment |
-    - How to publish a db
-- Continuous integration and deployment pipeline |
+    - How are you going to publish or migrate a db
+
++++
+
+- Continuous integration and deployment pipeline
     - AppVeyor
     - Octopus Deploy
     - Pick the technology which focuses on what you want to do, not that does everything
@@ -272,8 +294,6 @@ new List<string>()
 <h4 style="text-transform: none">One problem which goes deeper and deeper to fix things before you can do what you want</h4>
 </div>
 
-One problem which goes deeper and deeper to fix things before you can do what you want
-
 +++?image=kcdc2017/assets/trim-yak.png
 
 +++?image=kcdc2017/assets/trim-yak-no-text.png
@@ -281,16 +301,12 @@ One problem which goes deeper and deeper to fix things before you can do what yo
 <h4 style="text-transform: none">Growing productivity broadly. Not a specific task.</h4>
 </div>
 
-Growing productivity broadly. Not a specific task.
-
 +++?image=kcdc2017/assets/royal-yak.png
 
 +++?image=kcdc2017/assets/royal-yak-no-text.png
 <div style="width: 45%">
 <h4 style="text-transform: none">Usually seen as a time waster, but relationship building is a productivity booster</h4>
 </div>
-
-Usually seen as a time waster, but relationship building is a productivity booster
 
 +++?image=kcdc2017/assets/golden-yak.png
 
@@ -310,7 +326,7 @@ Usually seen as a time waster, but relationship building is a productivity boost
 
 ### [Not-Separateness](http://www.tkwa.com/fifteen-properties/not-separateness-2/)
 
-> the degree of connectedness an element has with all that is around it. A thing which has this quality feels completely at peace, because it is so deeply interconnected with its world.
+> "…the degree of connectedness an element has with all that is around it. A thing which has this quality feels completely at peace, because it is so deeply interconnected with its world."
 
 - Impacts real people
 - Programs not separate from the environment they run in
