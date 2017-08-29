@@ -1,6 +1,6 @@
 # KCDC 2017
 
----?image=kcdc2017/assets/black-yak.png
+---
 
 ### Docker hands-on Workshop
 
@@ -38,11 +38,12 @@ https://gitpitch.com/schneidenbach/TypeScriptTypeSystem
 - Are using now with Angular
 - Union types, type guards, intersection types, type capture, discriminated unions, never type
 
+http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(shape:%20Shape)%20{%0A%20%20%20%20switch%20(shape.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20shape.size%20*%20shape.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20shape.height%20*%20shape.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(shape);%0A%20%20%20%20}%0A}
+
 +++
  
-http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(s:%20Shape)%20{%0A%20%20%20%20switch%20(s.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20s.size%20*%20s.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20s.height%20*%20s.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(s);%0A%20%20%20%20}%0A%20%20%20%20//error%20-%20didn't%20handle%20Triangle!%0A}%0A
-```typescript
 
+```typescript
 interface Square {
     kind: "square";
     size: number;
@@ -63,14 +64,20 @@ function assertNever(x: never): never {
     throw new Error("Unexpected object: " + x);
 }
 
-function area(s: Shape) {
-    switch (s.kind) {
-        case "square": return s.size * s.size;
-        case "rectangle": return s.height * s.width;
-        default: return assertNever(s); //error - Argument of type 'Circle' is not assignable to parameter of type 'never'
+function area(shape: Shape) {
+    switch (shape.kind) {
+        case "square": return shape.size * s.size;
+        case "rectangle": return shape.height * s.width;
+        default: return assertNever(shape);
     }
 }
 ```
+
+@[1-15]
+@[16-20] No type is a subtype of or assignable to never (except never itself)
+@[21-73] Compile error - Argument of type 'Circle' is not assignable to parameter of type 'never'
+
+
 +++
 
 What about other typed languages which compile to JavaScript or WebAssembly?
@@ -235,7 +242,7 @@ new List<string>()
 - Doing seemingly unrleated tasks to get some real task done
 - Be deliberate of the ones you shave
 
-+++
++++?image=kcdc2017/assets/black-yak.png
 
 ### Black yak/attack yak
 
@@ -245,25 +252,25 @@ Your task is 80% complete these yaks form the next 80%
 - Track the attacks
 - Clear the path
 
-+++
++++?image=kcdc2017/assets/imperial-yak.png
 
 ### Imperial yak/Yak stack
 
 One problem which goes deeper and deeper to fix things before you can do what you want
 
-+++
++++?image=kcdc2017/assets/trim-yak.png
 
 ### Trim yak/Hackhacking yak
 
 Growing productivity broadly. Not a specific task.
 
-+++
++++?image=kcdc2017/assets/royal-yak.png
 
 ### Royal yaks/ Yakkity yaks
 
 Usually seen as a time waster, but relationship building is a productivity booster
 
-+++
++++?image=kcdc2017/assets/golden-yak.png
 
 ### Golden yaks
 
