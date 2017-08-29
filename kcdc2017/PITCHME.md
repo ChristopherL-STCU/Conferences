@@ -38,10 +38,10 @@ https://gitpitch.com/schneidenbach/TypeScriptTypeSystem
 - Are using now with Angular
 - Union types, type guards, intersection types, type capture, discriminated unions, never type
 
-http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(shape:%20Shape)%20{%0A%20%20%20%20switch%20(shape.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20shape.size%20*%20shape.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20shape.height%20*%20shape.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(shape);%0A%20%20%20%20}%0A}
-
 +++
- 
+
+[TypeScript playground](http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(shape:%20Shape)%20{%0A%20%20%20%20switch%20(shape.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20shape.size%20*%20shape.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20shape.height%20*%20shape.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(shape);%0A%20%20%20%20}%0A})
+
 
 ```typescript
 interface Square {
@@ -74,13 +74,15 @@ function area(shape: Shape) {
 ```
 
 @[1-15]
-@[16-20] No type is a subtype of or assignable to never (except never itself)
-@[21-73] Compile error - Argument of type 'Circle' is not assignable to parameter of type 'never'
+@[16-20] (No type is a subtype of or assignable to never, except never itself)
+@[21-73] (Compile error - Argument of type 'Circle' is not assignable to parameter of type 'never')
 
 
 +++
 
-What about other typed languages which compile to JavaScript or WebAssembly?
+### Q's
+
+- What about other typed languages which compile to JavaScript or WebAssembly?
 
 +++
 
@@ -106,7 +108,7 @@ function handleResponse(response: PersonResponse) {
 
 ### Doing DevOps
 
-"Union of people, process, and products to enable continuous delivery of value to our end users" Damian ~ Brady (perhaps)
+> Union of people, process, and products to enable continuous delivery of value to our end users
 
 +++
 
@@ -118,17 +120,15 @@ function handleResponse(response: PersonResponse) {
 
 Example:
 
-10 seconds: a mistake is made creating a problem
-10 minutes: the solution to the problem is known
-6 hours: to approve execute of the solution
+- 10 seconds: a mistake is made creating a problem
+- 10 minutes: the solution to the problem is known
+- 6 hours: to approve execute of the solution
 
 +++
 
-There is a company doing devops which has it harder than what you have it
-
-Treat as a product, not a project. Projects have a date. Products have value which can continually be improved.
-
-It can get worse before better
+- There is a company doing devops which has it harder than what you have it
+- Treat as a product, not a project. Projects have a date. Products have value which can continually be improved |
+- It can get worse before better |
 
 +++
 
@@ -138,7 +138,9 @@ It can get worse before better
 
 +++
 
-Do you need automated testing in place?
+### Q's
+
+- Do you need automated testing in place?
 
 ---
 
@@ -153,7 +155,7 @@ Do you need automated testing in place?
 
 ### C# without null or exceptions
 
-https://gist.github.com/reidev275/dd57c807a8db6ac2189a672c8b32a348
+[From public gist](https://gist.github.com/reidev275/dd57c807a8db6ac2189a672c8b32a348)
 
 ```csharp
 public interface IMaybe<T>
@@ -180,10 +182,16 @@ new List<string>()
     just => Console.WriteLine("The head was " + just),
 () => Console.WriteLine("Cannot take the head of an empty list"));
 ```
+@[1-7]
+@[8-17]
+@[18-23]
+
 +++
 
-- Is it wise to bend c# like this?
-- Does it cause a mix of approaches is the code?
+### Q's
+
+- Is it wise to bend C# like this?
+- Does it cause a mix of approaches in the code?
 
 ---
 
@@ -226,13 +234,13 @@ new List<string>()
 - Visual Studio experience
     - Locks the site
     - Very limited in how the application can be deployed
-- Continuous deployment
+- Continuous deployment |
     - How to publish a db
-- Continuous integration and deployment pipeline
+- Continuous integration and deployment pipeline |
     - AppVeyor
     - Octopus Deploy
     - Pick the technology which focuses on what you want to do, not that does everything
-- ARM Templates
+- ARM Templates |
     - Build everything from scratch
 
 ---
@@ -244,37 +252,52 @@ new List<string>()
 
 +++?image=kcdc2017/assets/black-yak.png
 
-### Black yak/attack yak
 
-Your task is 80% complete these yaks form the next 80%
++++?image=kcdc2017/assets/black-yak-no-text.png
 
-- Summon with care
-- Track the attacks
-- Clear the path
+<div style="text:align:left;width: 50%">
+<h4 style="text-transform: none">Your task is 80% complete these yaks form the next 80%</h4>
+
+<ul>
+<li>Summon with care</li>
+<li>Track the attacks</li>
+<li>Clear the path</li>
+</ul>
+</div>
 
 +++?image=kcdc2017/assets/imperial-yak.png
 
-### Imperial yak/Yak stack
++++?image=kcdc2017/assets/imperial-yak-no-text.png
+<div style="float: right; width: 45%">
+<h4 style="text-transform: none">One problem which goes deeper and deeper to fix things before you can do what you want</h4>
+</div>
 
 One problem which goes deeper and deeper to fix things before you can do what you want
 
 +++?image=kcdc2017/assets/trim-yak.png
 
-### Trim yak/Hackhacking yak
++++?image=kcdc2017/assets/trim-yak-no-text.png
+<div style="float: right; width: 45%">
+<h4 style="text-transform: none">Growing productivity broadly. Not a specific task.</h4>
+</div>
 
 Growing productivity broadly. Not a specific task.
 
 +++?image=kcdc2017/assets/royal-yak.png
 
-### Royal yaks/ Yakkity yaks
++++?image=kcdc2017/assets/royal-yak-no-text.png
+<div style="width: 45%">
+<h4 style="text-transform: none">Usually seen as a time waster, but relationship building is a productivity booster</h4>
+</div>
 
 Usually seen as a time waster, but relationship building is a productivity booster
 
 +++?image=kcdc2017/assets/golden-yak.png
 
-### Golden yaks
-
-If you solve you totally change how you work, or maybe even the industry.
++++?image=kcdc2017/assets/golden-yak-no-text.png
+<div style="background-color: #ADEFFC">
+<h4 style="text-transform: none">If you solve you totally change how you work, or maybe even the industry</h4>
+</div>
 
 ---
 
@@ -285,10 +308,9 @@ If you solve you totally change how you work, or maybe even the industry.
 
 +++
 
-### Not-Separateness
+### [Not-Separateness](http://www.tkwa.com/fifteen-properties/not-separateness-2/)
 
-http://www.tkwa.com/fifteen-properties/not-separateness-2/
-"the degree of connectedness an element has with all that is around it. A thing which has this quality feels completely at peace, because it is so deeply interconnected with its world."
+> the degree of connectedness an element has with all that is around it. A thing which has this quality feels completely at peace, because it is so deeply interconnected with its world.
 
 - Impacts real people
 - Programs not separate from the environment they run in
