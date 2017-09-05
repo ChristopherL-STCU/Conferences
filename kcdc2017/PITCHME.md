@@ -128,21 +128,21 @@ The type of response is known, that there is a modelState and has firstName
 
 ### Detrimental deployment cycle
 
-1. deployments so far apart
-2. because many have to approve
-3. because so far apart
+1. Deployments so far apart
+2. Because many have to approve
+3. Because so far apart
 
 Example:
 
 - 10 seconds: a mistake is made creating a problem
 - 10 minutes: the solution to the problem is known
-- 6 hours: to approve execute of the solution
+- 6 hours: to approve the execution of the solution
 
 +++
 
-- There is a company doing devops which has it harder than what you have it
-- Treat as a product, not a project. Projects have a date. Products have value which can continually be improved |
-- It can get worse before better |
+- There is a company doing devops which has it harder than what you have it.
+- Treat as a product, not a project. Projects have a date. Products have value which can continually be improved. |
+- It can get worse before better. |
 
 +++
 
