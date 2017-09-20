@@ -248,7 +248,7 @@ new List<string>()
 
 ---
 
-### Continuous deliver in Azure: beyond right click deploy
+### Continuous delivery in Azure: beyond right click deploy
 
 - Visual Studio experience
     - Locks the site (can't redeploy)
