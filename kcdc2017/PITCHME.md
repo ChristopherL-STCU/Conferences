@@ -1,5 +1,10 @@
 # KCDC 2017
 
+Note:
+A generic developer conference/but leans toward Microsoft
+3 days, first workshop, second two sessions
+Feel free to stop me and ask questions
+
 ---
 
 ### Docker hands-on Workshop
@@ -14,6 +19,15 @@
 - Cloud Floundary: Continuous deployment outside of Docker (Garmin)
 - Why so many ways: try to meet the person where they are at
     - [A comparison](https://robrich.org/slides/docker-in-azure/#/41)
+    - [AKS](https://azure.microsoft.com/en-us/blog/introducing-azure-container-service-aks-managed-kubernetes-and-azure-container-registry-geo-replication/)
+
+Note:
+For my workshop I picked docker
+As a department using docker is something we've been looking into lately
+Helpful to have a discussion with someone and get some clarification
+Helpful things to think about
+Other options
+Azure container service vs app service. Also Azure container instance.
 
 ---
 
@@ -31,8 +45,9 @@
 - Reduced complexity and faster queries
 
 Note:
-Not very applicable to SoftDev, more comparable to the data warehouse
-
+Want to see if this is something we could incorporate into our apps.
+I found it was more relevant to the warehouse.
+    - And even if as a CU we started using it we would probably perform an extract and load into the graph db initially, instead of writing directly to it.
 
 ---
 
@@ -46,12 +61,12 @@ Not very applicable to SoftDev, more comparable to the data warehouse
 - <a target="_blank" href='http://www.typescriptlang.org/play/#src=interface%20Square%20{%0A%20%20%20%20kind:%20"square";%0A%20%20%20%20size:%20number;%0A}%0Ainterface%20Rectangle%20{%0A%20%20%20%20kind:%20"rectangle";%0A%20%20%20%20width:%20number;%0A%20%20%20%20height:%20number;%0A}%0Ainterface%20Circle%20{%0A%20%20%20%20kind:%20"circle";%0A%20%20%20%20radius:%20number;%0A}%0A%0Atype%20Shape%20=%20Square%20|%20Rectangle%20|%20Circle;%0A%0Afunction%20assertNever(x:%20never):%20never%20{%0A%20%20%20%20throw%20new%20Error("Unexpected%20object:%20"%20+%20x);%0A}%0A%0Afunction%20area(shape:%20Shape)%20{%0A%20%20%20%20switch%20(shape.kind)%20{%0A%20%20%20%20%20%20%20%20case%20"square":%20return%20shape.size%20*%20shape.size;%0A%20%20%20%20%20%20%20%20case%20"rectangle":%20return%20shape.height%20*%20shape.width;%0A%20%20%20%20%20%20%20%20default:%20return%20assertNever(shape);%0A%20%20%20%20}%0A}'>Never type</a>
 
 Note:
-Useful since we use Angular, which uses TypeScript
-TypeScript much more sophisticated than I realized
+Was a time where dynamic languages were the rage, people have realized the drawbacks, momentum switching to static
+- Tools can assist
+- Tough to make changes and be aware of all the ramifications Useful since we use Angular, which uses TypeScript TypeScript much more sophisticated than I realized Nice conversation about compile to languages and web assembly, but they seem convinced.
+- I still think people will using web assembly for this in the future
 
 +++
-
-
 
 ```typescript
 interface Square {
@@ -141,8 +156,8 @@ Example:
 +++
 
 - There is a company doing devops which has it harder than what you have it.
-- Treat as a product, not a project. Projects have a date. Products have value which can continually be improved. |
-- It can get worse before better. |
+- Treat as a product, not a project. Projects have a date. Products have value which can continually be improved.
+- It can get worse before better.
 
 +++
 
@@ -150,7 +165,17 @@ Example:
 - Managers aren't going to change something they can't see.
 - Make the business the bottleneck. Showing they are the reason stuff is not getting done.
 
-+++
+Note:
+Goal of continuous deployment The cycle
+    - We are in this cycle, for at least internal projects
+    - Something we are going through with our current work
+        - How can we deliver business value quickly
+            - Desire to deliver little bits at a time
+            - We'll be discussing this more in our retro/planning meeting later today.  Points to consider
+    - We have Phoenix or Alkami, we can't do this. No, others have it harder
+    - Change mindset, product can be incrementally improved, deployed
+    - Complications to figure out along the way, snags Make business bottleneck. We have this thing we want to deploy, deliver value, but can't Good conversation on what is necessary before you begin, tdd
+
 
 ### Q's
 
@@ -164,6 +189,12 @@ Example:
 - Not how to write the code but how to manage the code you run it in
     - Goal: isolate changes and deploy quickly
 - The observed patterns deploying rapidly to cloud
+
+Note:
+Continuing the theme, the next session thoughts on being do deploy apps quickly
+A methodology for doing so from learned lessons
+    - Varying degrees of importance and acceptance across the points
+    - Things to keep in mind as we move in this direction
 
 ---
 
@@ -200,17 +231,25 @@ new List<string>()
     just => Console.WriteLine("The head was " + just),
 () => Console.WriteLine("Cannot take the head of an empty list"));
 ```
+
 @[1-7]
 @[8-11]
 @[12-21]
 @[22-27]
-
 +++
 
 ### Q's
 
 - Is it wise to bend C# like this?
 - Does it cause a mix of approaches in the code?
+
+Note:
+The question on how to handle nulls
+    - Nullable values, null coalesce, null conditional, other considerations in c# 8
+    - Always a hot topic
+One approach inspired by the Maybe Monad in Haskell
+But is it wise to bend a language to behave like another. I'm not convinced.
+What is the real impact of null exceptions to the CU?
 
 ---
 
@@ -221,6 +260,11 @@ new List<string>()
 - Expressivity > proofs
 - Flexibility about when and where you verify
 - Types have costs, specs put you in control
+
+Note:
+Speaking of types, another approach by a dynamic language Declarative.
+Can be used to tell you more information about your program as you develop.
+    - Can help you address the question of building the right thing, instead of a thing that is right.
 
 ---
 
@@ -239,12 +283,21 @@ new List<string>()
 - Be consistent
 - Be static
 
+Note:
+Things to keep in mind to create a helpful service, instead of having to fight and be frustrated by it.
+Considerations as we potentially have free standing services or serverless functions
+
 ---
 
 ### Abstraction: enough is a enough
 
 - Don't abstract on the 2nd use case, wait until a *known* 3rd *distinct* use case then write *good enough* abstraction
 - Can still isolate common pieces in a method, just wait to write a more generic abstraction
+
+Note:
+Over use of the DRY principle?
+    - When to be okay with duplication. When is there benefit to or not to.
+    - Something to consider when writing or reviewing code. Are we making work for ourselves?
 
 ---
 
@@ -265,9 +318,16 @@ new List<string>()
 - ARM Templates |
     - Build everything from scratch
 
+Note:
+Lots of ways to deploy an application to Azure
+    - Easy way is what's usually shown, but this quickly breaks down
+    - Demonstrated an increasingly sophisticated way to reliable deploy a non-trivial application
+    - Pick the tech with the sweet spot for what you need, don't fight the tools
+
 ---
 
 ### Shaving the golden Yak
+
 
 - Doing seemingly unrleated tasks to get some real task done
 - Be deliberate of the ones you shave
@@ -315,6 +375,15 @@ new List<string>()
 <h4 style="text-transform: none">If you solve you totally change how you work, or maybe even the industry</h4>
 </div>
 
+Note:
+- Soft skills talk
+- We all deal with it. She classified the different types and assigned them a yak from an yak enthusiasts site
+- Attack: most typical: pause and decide, track and then clear
+- Yak Stack: one things leads to another: benefit of pairing (is this needed).  Urgent task -> workaround. Dangerous -> more important current task (more about team than you)
+- Hackhacking: change our environment in order to influence our own behavior, increasing our speed over time: set up a new box just so, automating things. Timebox. Stay curious. Pair, lean what they know.
+- Royal: need to talk to people to figure things out. In the end it's a boost, know what people know, or don't know. 
+- Golden: changes everything, the one that alters your reality, changes behavior, give us an option we didn't have before. Rarely a direct work-related reason to shave them well enough to find their deep secrets. To find them cultivate an awareness of what we’re doing while we do it.
+
 ---
 
 ### Beyond patterns: functional programming and the Nature of Order
@@ -331,3 +400,10 @@ new List<string>()
 - Impacts real people
 - Programs not separate from the environment they run in
 
+Note:
+From OO to Function to ???
+An attempt at considering the future of software, a contemplative approach
+    - To be honest, it wasn't a very good talk, but sort of fitting to end on
+    - After spending so much time thinking about the details this ask you to look up and consider things at a high level
+    - The impact on society
+    - What's the future impact of our software to our member's, beyond addressing immediate needs. Is this important?
